@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to the Exam</title>
+    <link rel="stylesheet" href="ExamSystem.css">
+</head>
+<style>
+.welcome {
+    width: 50%;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    text-align: center;
+    border: solid #546e7a 3px; 
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.welcome input {
+    padding: 10px;
+    width: 80%;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 2px solid #546e7a;
+}
+
+#start-btn {
+    padding: 10px;
+    width: 85%;
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #42a5f5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease;
+}
+
+#start-btn:disabled {
+    background-color: #b0bec5;
+    cursor: not-allowed;
+}
+
+#start-btn:hover:enabled {
+    background-color: #1e88e5;
+    cursor: pointer;
+    transform: scale(1.05);
+}
+</style>
+<body>
+
+    <div id="welcome-container" class="welcome">
+        <h2>Welcome to the Exam</h2>
+        <label for="student-name">Enter your name:</label>
+        <input type="text" id="student-name" placeholder="Your Name">
+        <p id="validation-message" style="color: red;"></p> <!-- Error message -->
+        <button id="start-btn" disabled>Start Exam</button>
+    </div>
+
+    <script>
+        const studentNameInput = document.getElementById("student-name");
+        const startButton = document.getElementById("start-btn");
+        const validationMessage = document.getElementById("validation-message");
+
+
+        studentNameInput.addEventListener("input", () => {
+            const name = studentNameInput.value.trim();
+            validationMessage.textContent = "";
+            startButton.disabled = true;
+
+            // Basic validation rules
+            if (name.length < 3) {
+                validationMessage.textContent = "Name must be at least 3 characters.";
+                return;
+            }
+
+            if (!/^[a-zA-Z ]+$/.test(name)) {
+                validationMessage.textContent = "Name must contain only letters and spaces.";
+                return;
+            }
+
+            startButton.disabled = false;
+        });
+
+        startButton.addEventListener("click", () => {
+            const studentName = studentNameInput.value.trim();
+            localStorage.setItem("studentName", studentName);
+            window.location.href = "exam.html";
+        });
+    </script>
+</body>
+</html>
